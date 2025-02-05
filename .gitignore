@@ -6,8 +6,10 @@ out/
 LibraryManagementSystem.iml
 .idea
 .idea/
-
-
+src/credentials.csv
+lib
+lib/
+lib/mysql-connector-j-9.1.0.jar
 
 ### Eclipse ###
 .apt_generated
