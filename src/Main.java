@@ -22,8 +22,12 @@ public class Main {
             Connection connection = connectionDB.getConnection();
             // User.addUser(connection, "Otavio", "otavio@gmail.com", 2);
             // User.deleteUser(connection, "Otavio", "otavio@gmail.com");
-            // User.getAllUsers(connection);
-            System.out.println(User.getUserId(connection, "Otavio", "otavio@gmail.com"));
+            // System.out.println(User.getUserId(connection, "Otavio", "otavio@gmail.com"));
+            /*User.getAllUsers(connection);
+            User.editUserAttribute(connection, 3, "user_email", "otavina@gmail.com" );
+            User.getAllUsers(connection);*/
+
+
         }
 
         catch (IOException | SQLException e) {

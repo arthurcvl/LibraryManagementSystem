@@ -8,8 +8,11 @@ public class User {
         ResultSet resultSet = statement.executeQuery("SELECT * FROM users");
         while(resultSet.next()){
             System.out.println("Name: " + resultSet.getString("username"));
+            System.out.println("Email: " + resultSet.getString("user_email"));
+            System.out.println("Telephone: " + resultSet.getInt("telephone"));
         }
     }
+
 
     public static void addUser(Connection connection, String username, String userEmail, int telephone) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement(
@@ -33,9 +36,24 @@ public class User {
         return resultSet.getInt("user_id");
     }
 
-    public static void editUser(Connection connection, int user_id){
-        return;
+    public static void editUser(Connection connection, int user_id, String newName, String newEmail, int newTelephone) throws SQLException {
+        System.out.println(editUserAttribute(connection, user_id, "username", newName));
+        System.out.println(editUserAttribute(connection, user_id, "user_email", newEmail));
+        System.out.println(editUserAttribute(connection, user_id, "telephone", newTelephone));
     }
+
+    public static <T> String editUserAttribute(Connection connection, int user_id, String editAttribute, T newValue) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement(
+                "UPDATE users SET users." + editAttribute + " = ? WHERE user_id = ?;");
+        if(newValue instanceof String) preparedStatement.setString(1, (String) newValue);
+        else preparedStatement.setInt(1, (int) newValue);
+        preparedStatement.setInt(2, user_id);
+
+        int i = preparedStatement.executeUpdate();
+        if(i > 0 ) return "User" + editAttribute + "Updated with Success";
+        return editAttribute + " Update Failed";
+    }
+
 
     public static void deleteUser(Connection connection, String username, String userEmail) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement(
