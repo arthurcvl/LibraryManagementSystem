@@ -1,4 +1,6 @@
 import java.sql.*;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class User {
 
@@ -15,16 +17,11 @@ public class User {
 
 
     public static void addUser(Connection connection, String username, String userEmail, int telephone) throws SQLException {
-        PreparedStatement preparedStatement = connection.prepareStatement(
-                "INSERT INTO users(username, user_email, telephone) VALUES(?, ?, ?);");
-        preparedStatement.setString(1, username);
-        preparedStatement.setString(2, userEmail);
-        preparedStatement.setInt(3, telephone);
-
-        int i = preparedStatement.executeUpdate();
-        if(i > 0) System.out.println("User " + username + " added with sucess!");
-        else System.out.println("Add User failed");
+        ConnectionDB.addRow("users",
+                new LinkedHashMap<>(Map.of("username", username, "user_email", userEmail, "telephone", telephone)),
+                connection);
     }
+
 
     public static int getUserId(Connection connection, String username, String userEmail) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement(
