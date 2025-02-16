@@ -25,17 +25,24 @@ public class Main {
             // System.out.println(User.getUserId(connection, "Otavio", "otavio@gmail.com"));
             /*User.getAllUsers(connection);
             User.editUserAttribute(connection, 3, "user_email", "otavina@gmail.com" ); */
-            User.getAllUsers(connection);
+            // User.getAllUsers(connection);
 
             //TODO acho que a User class com o CRUD ficaria muito parecido com a BOOK class e seu CRUD então talvez de pra fazer uma classe que sirva para os dois n sei
             //TODO pensar sobre isso bastante acho que interface classe abstrata essas coisas não resolveriam ou talvez sim pra fazer alguns metodos default mas sla
 
-            Map<String, Object> map = new LinkedHashMap<>();
-            map.put("username", "Lucas");
-            map.put("user_email", "lucas@outloook.com");
-            map.put("telephone", 155);
-            ConnectionDB.addRow("users", map, connection);
-            User.getAllUsers(connection);
+//            Map<String, Object> map = new LinkedHashMap<>();
+//            map.put("username", "Lucas");
+//            map.put("user_email", "lucas@outloook.com");
+//            map.put("telephone", 155);
+//            ConnectionDB.addRow("users", map, connection);
+//            User.getAllUsers(connection);
+
+            connectionDB.printAll("books");
+//            ConnectionDB.deleteRow(connection, "books", 3);
+            String s = ConnectionDB.editRow(connection, "books", 1, "writer", "Schopenhauer");
+            connectionDB.printAll("books");
+
+
 
 
         }
@@ -47,3 +54,5 @@ public class Main {
 
     }
 }
+
+

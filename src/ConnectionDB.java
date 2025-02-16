@@ -41,26 +41,15 @@ public class ConnectionDB {
         String columns = "";
         int l = 1;
         for(T key : map.keySet()) {
-            if(l != map.size()) {
-                columns = columns + key.toString() + ",";
-                l++;
-            }
-            else{
-                columns = columns + key.toString();
-            }
+            if(l != map.size()) {columns = columns + key.toString() + ",";l++;}
+            else columns = columns + key.toString();
         }
-        System.out.println(columns);
         String statement = "INSERT INTO " + table + "(" + columns + ") VALUES(";
         for(int i = 1; i <= map.size(); i++){
-            if(i != map.size()){
-                statement = statement + "?,";
-            }
+            if(i != map.size())statement = statement + "?,";
             //TODO eu tenho certeza que eu não preciso usar esse else e posso so usar else ali no if na mesma linha tb talvez
-            else {
-                statement = statement + "?)";
-            }
+            else statement = statement + "?)";
         }
-        System.out.println(statement);
         PreparedStatement preparedStatement = connection.prepareStatement(statement);
         int i = 1;
         for(T key: map.keySet()){
@@ -72,11 +61,40 @@ public class ConnectionDB {
         else System.out.println("Add Row failed");
     }
 
-    // public <T> void filter(Predicate predicate){return;}
+    public static void deleteRow(Connection connection, String table, int id) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement(
+                "DELETE FROM " + table + " WHERE " + table.substring(0, table.length() - 1) + "_id = ?;");
+        preparedStatement.setInt(1, id);
+        int i = preparedStatement.executeUpdate();
+        if(i > 0) System.out.println("Row in " + table + " deleted with sucess!");
+        else System.out.println("Delete Row failed");
+    }
+    //TODO fazer o edit generico
+
+    public static <T> String editRow(Connection connection, String table, int id, String editAttribute, T newValue) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement(
+                "UPDATE " + table + " SET " + editAttribute + " = ? WHERE " + table.substring(0, table.length() - 1) +"_id = ?;");
+        preparedStatement.setObject(1, newValue);
+        preparedStatement.setInt(2, id);
+
+        int i = preparedStatement.executeUpdate();
+        if(i > 0 ) return table + " " + editAttribute + "Updated with Success";
+        return editAttribute + " Update Failed";
+    }
+
+    public static void deleteFunctionalInterface(){return;}
+    // eu consigo usar alguma interface funcional pra deletar com base em um condiçao 100% ou talvez nem precise de uma lmao
+
+    public static void filter(Connection connection, String table){
+        return;
+    }
 
     //TODO um edit que o user pode por o where dele sla
 
     // no add Borrow colocar um que se voce so der enter na data de devolução ou na data de emprestimo ela vai ser contabilizada
     // como hoje, alem disso a verificação de se as datas batem uma com a outra vai ocorrer no programa de java msm
     // calculo da multa tambem vai ser no java tbm
+    // na data se o return date for null é porque ainda não foi devolvido
+
+    //TODO Fazer um join left join sei la pra colocar no lugar do user and books id na tabela de borrowing o nome do user e do book
 }
