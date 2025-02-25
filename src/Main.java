@@ -27,18 +27,22 @@ public class Main {
 
 
 //            Map<String,String> map = new LinkedHashMap<>();
-//            map.put("n", "arthur\n");
-//            map.put("b", "sobrenome");    
+//            map.put("bookname", "Filosofia\n");
+//            map.put("writer", "Schopenhauer");
 //
-//            ConnectionDB.addRow("users", map, connection);
+//            ConnectionDB.addRow("books", map, connection);
 
 //            System.out.println(ConnectionDB.getBorrowingId(connection, 2));
 
             //ConnectionDB.deleteRow(connection, "borrowings", ConnectionDB.getBorrowingId(connection, 2));
-            //BorrowingService.borrowBook(connection, "LIVRO MAGICO", "Arthur", "arthurmail", LocalDate.of(2025, 1, 20), LocalDate.of(2025, 1, 30));
-            double v = BorrowingService.calculateFine(connection, 2);
-            System.out.println(v);
+//            ConnectionDB.editRow(connection, "books", 4, "bookname", "Filosofia");
+//            BorrowingService.borrowBook(connection, "Filosofia", "Arthur", "arthurmail", LocalDate.of(2025, 1, 20), null);
+//            double v = BorrowingService.calculateFine(connection, 4);
+//            System.out.println(v);
             //TODO pensar se a classe ConnectionDB e seus metodos devem na realidade ser não estaticos
+
+            //BorrowingService.getALlBorrowings(connection);
+            ConnectionDB.getAllWithCondition("books", connection, "writer", "Unknown");
 
             //BorrowingService.borrowBook(connection, "LIVRO MAGICO", "Otavio", "otavinlol@gmail.com", LocalDate.of(2025, 1, 28), LocalDate.of(2025, 1, 29));
 
